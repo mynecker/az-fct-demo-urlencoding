@@ -1,6 +1,6 @@
 # Sample 
 
-Related to: https://github.com/micronaut-projects/micronaut-azure
+Related to: https://github.com/micronaut-projects/micronaut-azure/issues/120
 
 Sample demonstrating issue with HTTP Azure Function and content type `application/x-www-form-urlencoded``.
 
