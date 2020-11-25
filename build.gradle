@@ -1,0 +1,68 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.4.10"
+    id "org.jetbrains.kotlin.kapt" version "1.4.10"
+    id "org.jetbrains.kotlin.plugin.allopen" version "1.4.10"
+    id "com.microsoft.azure.azurefunctions" version "1.5.0"
+    id("io.micronaut.application") version "1.2.0"
+}
+
+version "0.1"
+group "az.fct.demo.urlencoding"
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "https://oss.jfrog.org/oss-snapshot-local" }
+}
+
+micronaut {
+    runtime("azure_function")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations "az.fct.demo.urlencoding.*"
+    }
+}
+
+
+dependencies {
+    implementation("io.micronaut:micronaut-validation")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+    implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
+    implementation("io.micronaut:micronaut-runtime")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+    testImplementation("io.micronaut:micronaut-http-client")
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion('1.8')
+}
+
+application {
+    mainClass.set("az.fct.demo.urlencoding.Application")
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+azurefunctions {
+    resourceGroup = 'java-functions-group'
+    appName = 'az-fct-demo-urlencoding'
+    pricingTier = 'Consumption'
+    region = 'westus'
+    runtime {
+      os = 'windows'
+    }
+    localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
+}
+
+

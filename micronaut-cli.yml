@@ -1,0 +1,6 @@
+applicationType: function
+defaultPackage: az.fct.demo.urlencoding
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: gradle
+features: [app-name, azure-function, gradle, junit, kotlin, logback, readme, yaml]
